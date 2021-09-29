@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
@@ -7,22 +9,39 @@ public class EnemyManager : MonoBehaviour
     public float spawnTime = 3f;
     public Transform[] spawnPoints;
 
+    [SerializeField]
+    MonoBehaviour factory;
+    IFactory Factory{get{return factory as IFactory;}}
 
-    void Start ()
+    // Start is called before the first frame update
+    void Start()
     {
+        //Mengeksekusi fungsi spawn setiap beberapa detik sesuai dengan nilai spawnTime
         InvokeRepeating("Spawn", spawnTime, spawnTime);
+        
     }
 
-
-    void Spawn ()
+    // Update is called once per frame
+    void Update()
     {
-        if (playerHealth.currentHealth <= 0f)
+        
+    }
+
+    void Spawn()
+    {
+        //Jika player telah mati maka tidak membuat enemy baru
+        if(playerHealth.currentHealth <= 0f)
         {
             return;
         }
 
-        int spawnPointIndex = Random.Range (0, spawnPoints.Length);
-        Instantiate(enemy, spawnPoints[spawnPointIndex].position, spawnPoints[spawnPointIndex].rotation);
+        //Mendapatkan nilai random
+        int spawnPointIndex = Random.Range(0, spawnPoints.Length);
+        int spawnEnemy = Random.Range(0, 3);
 
+
+        //duplicate enemies
+        //Instantiate(enemy, spawnPoints[spawnPointIndex].position, spawnPoints[spawnPointIndex].rotation)
+        Factory.FactoryMethod(spawnEnemy);
     }
 }

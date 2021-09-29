@@ -4,30 +4,33 @@ using System.Collections;
 public class EnemyMovement : MonoBehaviour
 {
     Transform player;
-    //PlayerHealth playerHealth;
-    //EnemyHealth enemyHealth;
+    PlayerHealth playerHealth;
+    EnemyHealth enemyHealth;
     UnityEngine.AI.NavMeshAgent nav;
 
 
     private void Awake ()
     {
-        player = GameObject.FindGameObjectWithTag ("Player").transform;
+        //cari game object dengan tag player
+        player = GameObject.FindGameObjectWithTag("Player").transform;
 
-        //playerHealth = player.GetComponent <PlayerHealth> ();
-        //enemyHealth = GetComponent <EnemyHealth> ();
-        nav = GetComponent <UnityEngine.AI.NavMeshAgent> ();
+        //mendapatkan reference component
+        playerHealth = player.GetComponent<PlayerHealth>();
+        enemyHealth = GetComponent<EnemyHealth>();
+        nav = GetComponent<UnityEngine.AI.NavMeshAgent>();
     }
 
 
     void Update ()
     {
-        //if (enemyHealth.currentHealth > 0 && playerHealth.currentHealth > 0)
-        //{
+        //memindahkan posisi player
+        if (enemyHealth.currentHealth > 0 && playerHealth.currentHealth > 0)
+        {
             nav.SetDestination (player.position);
-        //}
-        //else
-        //{
-        //    nav.enabled = false;
-        //}
+        }
+        else //berhenti bergerak
+        {
+            nav.enabled = false;
+        }
     }
 }
