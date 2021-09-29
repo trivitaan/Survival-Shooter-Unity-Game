@@ -2,16 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShootCommand : MonoBehaviour
+public class ShootCommand : Command
 {
-    // Start is called before the first frame update
-    void Start()
+    PlayerShooting playerShooting;
+
+    public ShootCommand(PlayerShooting _playerShooting)
     {
-        
+        playerShooting = _playerShooting;
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void Execute()
+    {
+        playerShooting.Shoot();
+    }
+
+    public override void UnExecute()
     {
         
     }
